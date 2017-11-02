@@ -215,6 +215,74 @@ Jasmine允许在执行测试集/测试用例的开始前/结束后做一些初�
 
 [示例代码](./spec/xdescribe_xit.js)
 
+### Spy
+Spy用来追踪函数的调用历史信息（是否被调用、调用参数列表、被请求次数等）。Spy仅存在于定义它的describe和it方法块中，并且每次在spec执行完之后被销毁。
+当在一个对象上使用spyOn方法后即可模拟调用对象上的函数，此时对所有函数的调用是不会执行实际代码的。示例1中包含了两个Spy常用的expect：
+- toHaveBeenCalled: 函数是否被调用
+- toHaveBeenCalledWith: 调用函数时的参数
 
+[示例代码](./spec/Spy.js)
+
+#### and.callThrough()
+在使用Spy的同时也希望执行实际的代码, 通过在使用spyOn后面增加了链式调用and.CallThrough()，这将告诉Jasmine我们除了要完成对函数调用的跟踪，同时也需要执行实际的代码。
+```javascript
+ spyOn(foo, 'getBar').and.callThrough(); // 与示例1中不同之处在于使用了callThrough，这将时所有的函数调用为真实的执行
+```
+[示例代码](./spec/Spy_callThrough.js)
+
+#### and.returnValue()
+由于Spy是模拟函数的调用，因此我们也可以强制指定函数的返回值。
+如果被调用的函数是通过从其他函数获取某些值，我们通过使用returnValue模拟函数的返回值。这样做的好处是可以有效的隔离依赖，使测试流程变得更简单。
+```javascript
+ spyOn(foo, "getBar").and.returnValue(745); // 这将指定getBar方法返回值为745
+```
+[示例代码](./spec/Spy_returnValue.js)
+
+#### and.callFake()
+与returnValue相似，callFake则更进一步，直接通过指定一个假的自定义函数来执行。这种方式比returnValue更灵活，我们可以任意捏造一个函数来达到我们的测试要求。
+```javascript
+ spyOn(foo, "getBar").and.callFake(function() {
+          return 1001;
+        });
+```
+[示例代码](./spec/Spy_callFake.js)
+
+#### and.throwError()
+throwError便于我们模拟异常的抛出。
+```javascript
+ spyOn(foo, "setBar").and.throwError("quux");
+```
+[示例代码](./spec/Spy_throwError.js)
+
+#### and.stub
+[示例代码](./spec/Spy_stub.js)
+
+#### calls
+- calls：对于被Spy的函数的调用，都可以在calls属性中跟踪。
+- calls.any(): 被Spy的函数一旦被调用过，则返回true，否则为false；
+- calls.count(): 返回被Spy的函数的被调用次数；
+- calls.argsFor(index): 返回被Spy的函数的调用参数，以index来指定参数；
+- calls.allArgs():返回被Spy的函数的所有调用参数；
+- calls.all(): 返回calls的上下文，这将返回当前calls的整个实例数据；
+- calls.mostRecent(): 返回calls中追踪的最近一次的请求数据；
+- calls.first(): 返回calls中追踪的第一次请求的数据；
+- object: 当调用all()，mostRecent()，first()方法时，返回对象的object属性返回的是当前上下文对象；
+- calls.reset(): 重置Spy的所有追踪数据；
+
+[示例代码](./spec/Spy_calls.js)
+
+#### createSpy
+假如没有函数可以追踪，我们可以自己创建一个空的Spy。创建后的Spy功能与其他的Spy一样：跟踪调用、参数等，但该Spy没有实际的代码实现，这种方式经常会用在对JavaScript中的对象的测试。
+```javascript
+ whatAmI = jasmine.createSpy('whatAmI');
+```
+[示例代码](./spec/Spy_createSpy.js)
+
+#### createSpyObj
+如果需要spy模拟多个函数调用，可以向jasmine.createSpyObj中传入一个字符串数组，它将返回一个对象，你所传入的所有字符串都将对应一个属性，每个属性即为一个Spy。
+```javascript
+ tape = jasmine.createSpyObj('tape', ['play', 'pause', 'stop', 'rewind']);
+```
+[示例代码](./spec/Spy_createSpyObj.js)
 ## 参考文献
 - [jasmine入门](http://www.cnblogs.com/wushangjue/p/4541209.html)
