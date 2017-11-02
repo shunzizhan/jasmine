@@ -52,23 +52,23 @@
 // 在beforeEach/it/afterEach中，还可以使用this关键字定义变量，
 // 需要注意的是，使用this关键字声明的变量，
 // 仅在beforeEach/it/afterEach这个过程中传递：
-(function(){
-    describe("Test 'this'", function() {
-      beforeEach(function() {
-        this.testCount = this.testCount || 0;
-        this.testCount++;
-      });
-
-      afterEach(function() {
-        //this.testCount = 0; //无论是否有这行，结果是一样的，因为this指定的变量只能在每个spec的beforeEach/it/afterEach过程中传递
-      });
-        
-      it("Spec 1", function() {
-        expect(this.testCount).toBe(1);
-      });
-      
-      it("Spec 2", function() {
-        expect(this.testCount).toBe(1);
-      });
+(function() {
+  describe("Test 'this'", function() {
+    beforeEach(function() {
+      this.testCount = this.testCount || 0;
+      this.testCount++;
     });
+
+    afterEach(function() {
+      //this.testCount = 0; //无论是否有这行，结果是一样的，因为this指定的变量只能在每个spec的beforeEach/it/afterEach过程中传递
+    });
+
+    it("Spec 1", function() {
+      expect(this.testCount).toBe(1);
+    });
+
+    it("Spec 2", function() {
+      expect(this.testCount).toBe(1);
+    });
+  });
 })();
