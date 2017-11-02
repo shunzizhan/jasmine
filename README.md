@@ -284,5 +284,43 @@ throwError便于我们模拟异常的抛出。
  tape = jasmine.createSpyObj('tape', ['play', 'pause', 'stop', 'rewind']);
 ```
 [示例代码](./spec/Spy_createSpyObj.js)
+
+### 其他匹配方式
+#### jasmine.any
+jasmine.any方法以构造器或者类名作为参数，Jasmine将判断期望值和真实值的构造器是否相同，若相同则返回true。
+[示例代码](./spec/jasmine_any.js)
+
+#### jasmine.anything
+jamine.anything判断只要不是null或undefined的值，若不是则返回true。
+[示例代码](./spec/jasmine_anything.js)
+
+#### jasmine.objectContaining
+jasmine.objectContaining用来判断对象中是否存在指定的键值属性对。
+[示例代码](./spec/jasmine_objectContaining.js)
+
+#### jasmine.stringMatching
+jasmine.stringMatching用来模糊匹配字符串，在jasmine.stringMatching中也可以使用正则表达式进行匹配，使用起来非常灵活。
+[示例代码](./spec/jasmine_stringMatching.js)
+
+#### 不规则匹配（自定义匹配）：asymmetricMatch
+某些场景下，我们希望能按照自己设计的规则进行匹配，此时我们可以自定义一个对象，该对象只要包含一个名为asymmetricMatch的方法即可。
+[示例代码](./spec/jasmine_asymmetricMatch.js)
+
+### Jasmine Clock
+Jasmine中可以使用jasmine.clock()方法来模拟操纵时间。
+要想使用jasmine.clock()，先调用jasmine.clock().install告诉Jasmine你想要在spec或者suite操作时间，当你不需要使用时，务必调用jasmine.clock().uninstall来恢复时间状态。
+示例中使用jasmine.clock().tick(milliseconds)来控制时间前进，本例中出现了三种时间控制方式：
+- setTimeout: 定期执行一次，当jasmine.clock().tick()的时间超过了timeout设置的时间时触发
+- setInterval: 定期循环执行，每当jasmine.clock().tick()的时间超过了timeout设置的时间时触发
+- mockDate: 模拟一个指定日期（当不提供基准时间参数时，以当前时间为基准时间）
+
+[示例代码](./spec/jasmine_Clock.js)
+
+###异步支持
+Jasmine可以支持spec中执行异步操作，当调用beforeEach, it和afterEach时，函数可以包含一个可选参数done，当spec执行完毕之后，调用done通知Jasmine异步操作已执行完毕。
+[示例代码](./spec/jasmine_done.js)
+
+![enter image description here](https://user-images.githubusercontent.com/7811369/32324257-c0b4e000-c005-11e7-9867-1ce73b324dee.png)
+
 ## 参考文献
 - [jasmine入门](http://www.cnblogs.com/wushangjue/p/4541209.html)
