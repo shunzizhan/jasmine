@@ -196,5 +196,25 @@ it("toThrowError and not.toThrowError", function() {
     expect(foo).toThrowError(TypeError, "foo bar baz");
   });
 ```
+
+### Setup和Teardown
+Jasmine允许在执行测试集/测试用例的开始前/结束后做一些初始化/销毁的操作。
+- Setup方法：
+	- beforeAll：每个suite（即describe）中所有spec（即it）运行之前运行
+	- beforeEach：每个spec（即it）运行之前运行
+- Teardown方法：
+	- afterAll：每个suite（即describe）中所有spec（即it）运行之后运行
+	- afterEach：每个spec（即it）运行之后运行
+
+[示例代码](./spec/setup_teardown.js)
+
+### xdescribe/xit的使用
+在实际项目中，需要由于发布的版本需要选择测试用例包，xdescribe和xit能很方便的将不包含在版本中的测试用例排除在外。不过xdescribe和xit略有不同：
+- xdescribe：该describe下的所有it将被忽略，Jasmine将直接忽略这些it，因此不会被运行
+- xit：运行到该it时，挂起它不执行
+
+[示例代码](./spec/xdescribe_xit.js)
+
+
 ## 参考文献
 - [jasmine入门](http://www.cnblogs.com/wushangjue/p/4541209.html)
