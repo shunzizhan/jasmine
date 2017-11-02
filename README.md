@@ -3,6 +3,8 @@
 >  - v 2.8
 >  - time 2017-11-2
 
+![enter image description here](https://user-images.githubusercontent.com/7811369/32324257-c0b4e000-c005-11e7-9867-1ce73b324dee.png)
+
 ## 基本语法
 
 ### describe(string, function)
@@ -326,7 +328,7 @@ Jasmine可以支持spec中执行异步操作，当调用beforeEach, it和afterEa
 
 [示例代码](./spec/jasmine_done.js)
 
-![enter image description here](https://user-images.githubusercontent.com/7811369/32324257-c0b4e000-c005-11e7-9867-1ce73b324dee.png)
+
 
 ## 参考文献
 - [jasmine入门](http://www.cnblogs.com/wushangjue/p/4541209.html)
